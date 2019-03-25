@@ -11,25 +11,20 @@ class App extends Component {
     this.state = {
       searchString: '',
       recipe: this.recipes,
-      recipeSearch: []
+      recipeSearch: this.recipes
     };
   }
 
   handleChangeFilter = e => {
     let valueFilter = e.target.value.toUpperCase()
-    
+
     let recipeFilter = this.state.recipe.filter((recipe) =>
         recipe.title.toUpperCase().includes(valueFilter) || recipe.ingredients.toUpperCase().includes(valueFilter)
     )
 
     this.setState({
-      searchString: valueFilter,
+      searchString: e.target.value,
       recipeSearch: recipeFilter
-    })
-  }
-  componentWillMount = e =>{
-    this.setState({
-      recipe: this.recipes
     })
   }
 
@@ -40,9 +35,11 @@ class App extends Component {
         <div className="container mt-10">
           <div className="row">
             {
-              this.state.searchString !== '' && this.state.recipeSearch.length === 0 ? <div>Not found</div> 
-              : 
-              <RecipeItem recipe={this.state.searchString !== '' ? this.state.recipeSearch : this.state.recipe} />
+              this.state.recipeSearch.length === 0 ? <h1>No results to show.</h1> 
+              :
+              this.state.recipeSearch.map((value,i) => (
+                <RecipeItem key={i} {...value} search={this.state.searchString} />
+              ))
             }
           </div>
         </div>
