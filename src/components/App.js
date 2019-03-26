@@ -38,7 +38,7 @@ class App extends Component {
               this.state.recipeSearch.length === 0 ? <h1>No results to show.</h1> 
               :
               this.state.recipeSearch.map((value,i) => (
-                <RecipeItem key={i} {...value} search={this.state.searchString} />
+                <RecipeItem {...value} search={this.state.searchString} key={i} />
               ))
             }
           </div>
